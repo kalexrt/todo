@@ -1,27 +1,33 @@
-import { db } from "../model/task";
+import {
+  createTaskInDB,
+  deleteTaskByIdFromDB,
+  getTaskByIdFromDB,
+  getTasksFromDB,
+  updateTaskInDB,
+} from "../model/task";
 import { ITask } from "../interfaces/ITask";
 
 //get tasks
-export function getTasks(){
-    return db;
+export function getTasks() {
+  return getTasksFromDB();
+}
+
+//get task by id
+export function getTaskById(id: number) {
+  getTaskByIdFromDB(id);
 }
 
 //delete task
-export function deleteTaskById(idToBeDeleted:number){
-    for (let i = 0; i < db.length; i++) {
-        if (db[i].id === idToBeDeleted) {
-            db.splice(i, 1);
-            break; 
-        }
-    }
+export function deleteTaskById(idToBeDeleted: number) {
+  deleteTaskByIdFromDB(idToBeDeleted);
 }
 
 //create task
 export function createTask(task: ITask) {
-    // validation
-    if (!task.id || !task.name || task.status === undefined) {
-        throw new Error("Invalid task data");
-    }
-    // Add task to the database
-    db.push(task);
+  createTaskInDB(task);
+}
+
+//update task
+export function updateTaskById(id: number, task: ITask) {
+  updateTaskInDB(id, task);
 }
